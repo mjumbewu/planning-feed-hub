@@ -1,0 +1,6 @@
+.env/
+env/
+*~
+*.py[c|o]
+
+local.py
