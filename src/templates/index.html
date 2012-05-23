@@ -1,3 +1,5 @@
+{% load crispy_forms_tags %}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -56,8 +58,9 @@
       <div class="row">
         <div class="span4">
           <form class="well planning-feed-form" method="POST">
-            <p>Use this form to add new feeds to the directory.</p>
-            {{form}}
+            <p>Use this form to add new feeds to the directory.  The feeds should conform to the OpenPlanning specification for representing planning data.</p>
+            <hr>
+            {{ form|crispy }}
             <button class="btn btn-primary btn-large" type="submit">Submit</button>
           </form>
         </div>
@@ -68,15 +71,25 @@
 <!--          })-->
 <!--        </script>-->
 
-        <div class="span6">
+        <style>
+          .feed-url {
+            font-style: italic;
+          }
+
+          .feed-publisher .name {
+            font-weight: bold;
+          }
+        </style>
+
+        <div class="span8">
           <h2>Feeds</h2>
           {% for feed in results %}
-            <hr>
             <div>
               <div class="feed-url">Feed at {{ feed.url }}</div>
-              <div class="feed-publisher">by {{ feed.publisher }}</div>
+              <div class="feed-publisher">by <span class="name">{{ feed.publisher }}</span></div>
               <div class="feed-description">{{ feed.description }}</div>
             </div>
+            <hr>
           {% empty %}
             <div>
               (There are no feeds yet)
