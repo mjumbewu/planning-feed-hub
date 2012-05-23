@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Bootstrap, from Twitter</title>
+    <title>Planning Feed Hub</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -41,40 +41,65 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#">Project name</a>
-          <div class="nav-collapse">
-            <ul class="nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
-            </ul>
-          </div><!--/.nav-collapse -->
+
+          <a class="brand" href="#">Planning Feed Hub</a>
+
         </div>
       </div>
     </div>
 
     <div class="container">
 
-      <h1>Bootstrap starter template</h1>
-      <p>Use this document as a way to quick start any new project.<br> All you get is this message and a barebones HTML document.</p>
+      <h1>Planning Feed Hub</h1>
+      <p>The planning feed hub is a directory of publicly available data feeds with city-planning related data.</p>
 
-      <form class="planning-feed-form" method="POST">
-        {{form}}
-        <button type="submit">Submit</button>
-      </form>
+      <div class="row">
+        <div class="span4">
+          <form class="well planning-feed-form" method="POST">
+            <p>Use this form to add new feeds to the directory.</p>
+            {{form}}
+            <button class="btn btn-primary btn-large" type="submit">Submit</button>
+          </form>
+        </div>
 
-      <script>
-        $(function() {
-          $('.planning-feed-form').ajaxForm()
-        })
-      </script>
+<!--        <script>-->
+<!--          $(function() {-->
+<!--            $('.planning-feed-form').ajaxForm()-->
+<!--          })-->
+<!--        </script>-->
+
+        <div class="span6">
+          <h2>Feeds</h2>
+          {% for feed in results %}
+            <hr>
+            <div>
+              <div class="feed-url">Feed at {{ feed.url }}</div>
+              <div class="feed-publisher">by {{ feed.publisher }}</div>
+              <div class="feed-description">{{ feed.description }}</div>
+            </div>
+          {% empty %}
+            <div>
+              (There are no feeds yet)
+            </div>
+          {% endfor %}
+
+          {% if prev %}
+            <a href="{{ prev }}">Previous page</a>
+          {% endif %}
+
+          {% if next %}
+            <a href="{{ next }}">Next page</a>
+          {% endif %}
+        </div>
+      </div>
 
     </div> <!-- /container -->
 
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="{{ STATIC_URL }}js/jquery.form.js"></script>
+<!--    <script src="{{ STATIC_URL }}js/jquery.form.js"></script>-->
+
 <!--    <script src="{{ STATIC_URL }}js/bootstrap-transition.js"></script>-->
 <!--    <script src="{{ STATIC_URL }}js/bootstrap-alert.js"></script>-->
 <!--    <script src="{{ STATIC_URL }}js/bootstrap-modal.js"></script>-->

@@ -22,9 +22,8 @@ class PlanningFeedView (views.View):
             'description': feed.description
         }
 
-    def get(self, request):
-        # GET: Get a list of planning feeds, JSON formatted.
-        page = int(request.GET.get('page', 1))
+    def get_feeds_data(self):
+        page = int(self.request.GET.get('page', 1))
         perpage = 20  # The number of feeds per page
         begin = ((page - 1) * perpage)  # The index of the first feed on page
         end = (page * perpage)  # The index of the first feed on next page
@@ -43,12 +42,18 @@ class PlanningFeedView (views.View):
         # first/last page.
         num_pages = math.ceil(num_feeds / perpage)
 
+        base_uri = self.request.build_absolute_uri(self.request.path)
         if page > 1:
-            data['prev'] = reverse('feeds') + '?page=' + str(page - 1)
+            data['prev'] = base_uri + '?page=' + str(page - 1)
         if num_feeds > (page * perpage):
-            data['next'] = reverse('feeds') + '?page=' + str(page + 1)
+            data['next'] = base_uri + '?page=' + str(page + 1)
 
-        return self.render_GET_response(data)
+        return data
+
+    def get(self, request):
+        # GET: Get a list of planning feeds, JSON formatted.
+        feeds_data = self.get_feeds_data()
+        return self.render_GET_response(feeds_data)
 
     def post(self, request):
         # POST: Add a feed to the list, if it doesn't already exist.
@@ -101,7 +106,8 @@ class HomeView (PlanningFeedView):
                 status=status_code,
                 mimetype='application/json')
         else:
-            return self.render_form_response(form)
+            feeds_data = self.get_feeds_data()
+            return self.render_form_response(form, feeds_data)
 
     def render_form_response(self, form, context=None):
         context = context or {}
