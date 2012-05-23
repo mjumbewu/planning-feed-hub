@@ -24,3 +24,8 @@ gunicorn
 # ----------------------
 psycopg2
 south
+
+# ----------------------
+# Templates
+# ----------------------
+django-crispy-forms
