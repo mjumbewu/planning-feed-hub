@@ -9,6 +9,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^$', views.HomeView.as_view(), name='home'),
     url(r'^feeds/$', views.PlanningFeedApiView.as_view(), name='feeds'),
+    url(r'^api/', include('db.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )
 
