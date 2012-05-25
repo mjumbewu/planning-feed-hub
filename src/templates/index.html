@@ -82,7 +82,7 @@
           <h2>Feeds</h2>
           {% for feed in results %}
             <div>
-              <div class="feed-url">Feed at {{ feed.url }}</div>
+              <div class="feed-url">Feed at {{ feed.source_url }}</div>
               <div class="feed-publisher">by <span class="name">{{ feed.publisher }}</span></div>
               <div class="feed-description">{{ feed.description }}</div>
             </div>

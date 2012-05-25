@@ -18,7 +18,7 @@ class PlanningFeedView (views.View):
     def instance_to_dict(self, feed):
         return {
             'publisher': feed.publisher,
-            'url': feed.url,
+            'source_url': feed.source_url,
             'description': feed.description
         }
 
@@ -63,7 +63,7 @@ class PlanningFeedView (views.View):
         form = PlanningFeedForm(feed_data)
         if form.is_valid():
             try:
-                instance = PlanningFeedModel.objects.get(url=feed_data['url'])
+                instance = PlanningFeedModel.objects.get(source_url=feed_data['source_url'])
                 for attr, value in feed_data.items():
                     setattr(instance, attr, value)
                 instance.save()
@@ -95,7 +95,7 @@ class HomeView (PlanningFeedView):
         else:
             messages.success(
                 self.request, 'Feed at {0} successfully {1}'.format(
-                    data['url'],
+                    data['source_url'],
                     'created' if status_code == 201 else 'updated'))
             return HttpResponseRedirect(reverse('home'))
 
